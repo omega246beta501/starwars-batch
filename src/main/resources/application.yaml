@@ -1,8 +1,0 @@
-spring:
-  batch:
-    job:
-      enabled: false
-
-swapi:
-  planets:
-    url: http://swapi.co/api/planets/?format=json
