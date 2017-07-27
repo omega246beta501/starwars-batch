@@ -1,16 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <peoples>
     <people>
-        <birthYear>birthYear</birthYear>
-        <eyeColor>eyeColor</eyeColor>
-        <gender>gender</gender>
-        <hairColor>hairColor</hairColor>
-        <height>height</height>
-        <mass>mass</mass>
-        <name>name</name>
-        <skinColor>skinColor</skinColor>
-    </people>
-    <people>
         <birthYear>19BBY</birthYear>
         <eyeColor>Blue</eyeColor>
         <gender>Male</gender>

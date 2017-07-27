@@ -40,6 +40,7 @@ public class Csv2XmlBatchConfiguration {
         lineMapper.setFieldSetMapper(fieldSetMapper);
 
         itemReader.setLineMapper(lineMapper);
+        itemReader.setLinesToSkip(1);
 
         return itemReader;
     }
