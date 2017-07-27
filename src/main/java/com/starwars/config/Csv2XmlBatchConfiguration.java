@@ -1,12 +1,14 @@
 package com.starwars.config;
 
 import com.starwars.domain.People;
+import com.starwars.processor.PeopleProcessor;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
+import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.file.FlatFileItemReader;
@@ -19,9 +21,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @Configuration
 @EnableBatchProcessing
+@EnableScheduling
 public class Csv2XmlBatchConfiguration {
     @Bean
     public ItemReader<People> peopleReader() {
@@ -46,6 +50,11 @@ public class Csv2XmlBatchConfiguration {
     }
 
     @Bean
+    public ItemProcessor<People, People> getPeopleProcessor() {
+        return new PeopleProcessor();
+    }
+
+    @Bean
     public ItemWriter<People> getPeopleWriter() {
         StaxEventItemWriter<People> itemWriter = new StaxEventItemWriter<>();
 
@@ -62,11 +71,15 @@ public class Csv2XmlBatchConfiguration {
     }
 
     @Bean
-    public Step getCsvStep(StepBuilderFactory stepBuilderFactory, ItemWriter peopleWriter, ItemReader peopleReader) {
+    public Step getCsvStep(StepBuilderFactory stepBuilderFactory, ItemWriter peopleWriter,
+                           ItemProcessor peopleProcessor,
+                           ItemReader peopleReader) {
+
         return stepBuilderFactory
                 .get("csvStep")
                 .chunk(10)
                 .writer(peopleWriter)
+                .processor(peopleProcessor)
                 .reader(peopleReader)
                 .build();
     }
