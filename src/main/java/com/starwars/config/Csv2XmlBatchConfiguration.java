@@ -28,9 +28,9 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
-@Configuration
-@EnableBatchProcessing
-@EnableScheduling
+//@Configuration
+//@EnableBatchProcessing
+//@EnableScheduling
 public class Csv2XmlBatchConfiguration {
 
     @Autowired
